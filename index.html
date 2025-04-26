@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CUET - Responsive Menu</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body, html {
+      height: 100%;
+      overflow-x: hidden;
+      font-family: Arial, sans-serif;
+    }
+
+    /* Slideshow */
+    .slideshow {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      top: 0;
+      left: 0;
+    }
+
+    .slideshow img {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      animation: fade 20s infinite;
+    }
+
+    .slideshow img:nth-child(1) { animation-delay: 0s; }
+    .slideshow img:nth-child(2) { animation-delay: 5s; }
+    .slideshow img:nth-child(3) { animation-delay: 10s; }
+    .slideshow img:nth-child(4) { animation-delay: 15s; }
+
+    @keyframes fade {
+      0%   { opacity: 0; }
+      5%   { opacity: 1; }
+      25%  { opacity: 1; }
+      30%  { opacity: 0; }
+      100% { opacity: 0; }
+    }
+
+    /* Header */
+    header {
+      position: fixed;
+      width: 100%;
+      top: 0;
+      left: 0;
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 10px 20px;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo img {
+      height: 45px;
+      width: auto;
+      margin-right: 10px;
+    }
+
+    .logo h2 {
+      font-size: 1.5em;
+      font-weight: bold;
+    }
+
+    nav {
+      display: flex;
+      gap: 20px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-size: 1.1em;
+      padding: 8px 12px;
+      border-radius: 5px;
+      position: relative;
+      transition: color 0.3s ease;
+      overflow: hidden;
+    }
+
+    nav a::after {
+      content: "";
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      background: #f4a261;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      transition: width 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #f4a261;
+    }
+
+    nav a:hover::after {
+      width: 80%;
+    }
+
+    /* Three dot menu */
+    .menu-icon {
+      display: none;
+      font-size: 28px;
+      cursor: pointer;
+    }
+
+    /* Content */
+    .content {
+      position: relative;
+      z-index: 1;
+      color: white;
+      text-align: center;
+      padding-top: 150px;
+      font-size: 2em;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    }
+
+    /* Section Cards */
+    .section-container {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      padding: 40px 10px;
+      margin-top: 50px;
+      z-index: 1;
+      position: relative;
+    }
+
+    .section-card {
+      background-color: rgba(0, 0, 0, 0.6);
+      color: white;
+      width: 22%;
+      margin: 10px;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+
+    .section-card:hover {
+      transform: scale(1.05);
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+
+    .section-card h3 {
+      font-size: 1.6em;
+      margin-bottom: 10px;
+    }
+
+    .section-card p {
+      font-size: 1.1em;
+    }
+
+    /* Footer */
+    footer {
+      background-color: #222;
+      color: white;
+      padding: 30px 20px;
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      font-size: 0.9em;
+      margin-top: 50px;
+    }
+
+    .footer-section {
+      flex: 1;
+      min-width: 250px;
+      margin: 10px;
+    }
+
+    .footer-section h3 {
+      font-size: 1.4em;
+      margin-bottom: 15px;
+    }
+
+    .footer-section p,
+    .footer-section a {
+      color: white;
+      text-decoration: none;
+      display: block;
+      margin: 5px 0;
+      transition: color 0.3s ease;
+    }
+
+    .footer-section a:hover {
+      color: #f4a261;
+    }
+
+    .footer-search {
+      margin-top: 20px;
+    }
+
+    .footer-search input[type="text"] {
+      padding: 8px 12px;
+      border: none;
+      border-radius: 4px 0 0 4px;
+      outline: none;
+      width: 200px;
+    }
+
+    .footer-search button {
+      padding: 8px 16px;
+      border: none;
+      background-color: #f4a261;
+      color: white;
+      border-radius: 0 4px 4px 0;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .footer-search button:hover {
+      background-color: #e76f51;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      header {
+        flex-wrap: wrap;
+      }
+
+      nav {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        background: rgba(0,0,0,0.8);
+        text-align: center;
+        padding: 10px 0;
+      }
+
+      nav.active {
+        display: flex;
+      }
+
+      .menu-icon {
+        display: block;
+      }
+
+      .section-container {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .section-card {
+        width: 80%;
+        margin: 15px 0;
+      }
+
+      footer {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
+      .footer-section {
+        margin: 20px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Slideshow Background -->
+  <div class="slideshow">
+    <img src="1.jpg" alt="Background 1">
+    <img src="2.jpg" alt="Background 2">
+    <img src="3.jpg" alt="Background 3">
+    <img src="4.jpg" alt="Background 4">
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="logo">
+      <img src="logo.png" alt="CUET Logo">
+      <h2>CUET</h2>
+    </div>
+
+    <div class="menu-icon" onclick="toggleMenu()">☰</div>
+
+    <nav id="nav-links">
+      <a href="#home">Home</a>
+      <a href="#about">About CUET</a>
+      <a href="#academic">Academic</a>
+      <a href="#download">Download</a>
+      <a href="#download">Library</a>
+      <a href="#download">Login</a>
+    </nav>
+  </header>
+
+  <!-- Content -->
+  <div class="content">
+    <h1>Welcome to CUET</h1>
+    <p>Explore Our University</p>
+  </div>
+
+  <!-- Section Cards -->
+  <div class="section-container">
+    <div class="section-card">
+      <h3>Notices</h3>
+      <p>Stay updated with the latest announcements and news from CUET.</p>
+    </div>
+    <div class="section-card">
+      <h3>Admissions</h3>
+      <p>Find out more about the admission process and requirements at CUET.</p>
+    </div>
+    <div class="section-card">
+      <h3>About Us</h3>
+      <p>Learn more about CUET's mission, vision, and values.</p>
+    </div>
+    <div class="section-card">
+      <h3>Departments</h3>
+      <p>Explore the various departments and programs offered at CUET.</p>
+    </div>
+
+    <div class="section-card">
+        <h3>Departments</h3>
+        <p>Explore the various departments and programs offered at CUET.</p>
+    </div>
+
+    <div class="section-card">
+        <h3>Departments</h3>
+        <p>Explore the various departments and programs offered at CUET.</p>
+    </div>
+
+    <div class="section-card">
+        <h3>Departments</h3>
+        <p>Explore the various departments and programs offered at CUET.</p>
+      </div>
+
+      <div class="section-card">
+        <h3>Departments</h3>
+        <p>Explore the various departments and programs offered at CUET.</p>
+      </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-section">
+      <h3>Contact Us</h3>
+      <p>123 University Street, CUET City</p>
+      <p>Email: info@cuet.edu</p>
+      <p>Phone: +1 234 567 890</p>
+    </div>
+
+    <div class="footer-section">
+      <h3>Useful Links</h3>
+      <a href="#home">Home</a>
+      <a href="#about">About CUET</a>
+      <a href="#academic">Academic</a>
+      <a href="#download">Download</a>
+      <a href="#download">Login</a>
+
+      <div class="footer-search">
+        <input type="text" placeholder="Search...">
+        <button>Search</button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript for Mobile Menu -->
+  <script>
+    function toggleMenu() {
+      var navLinks = document.getElementById("nav-links");
+      navLinks.classList.toggle("active");
+    }
+  </script>
+
+</body>
+</html>
